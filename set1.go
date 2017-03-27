@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
+	"strings"
 )
 
 func main() {
@@ -37,6 +38,9 @@ func main() {
 	fmt.Println(n)
 	fmt.Println(string(dst))
 
+	fmt.Println("****Challenge 3")
+	s1c3 := "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
+	loopthroughalpha(s1c3)
 }
 
 func decodehex(s string) []byte {
@@ -76,4 +80,20 @@ func fastXORBytes(a, b []byte) []byte {
 	}
 
 	return dst
+}
+
+func loopthroughalpha(in string) {
+	var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	n := len(in)
+	//const alpha = "abcdefghijklmnopqrstuvwxyz"
+	inbyte := decodehex(in)
+	var tmp []byte
+	for i := 0; i < len(letterRunes); i++ {
+		s := strings.Repeat(string(letterRunes[i]), n)
+		hi := []byte(s)
+		tmp = hex.EncodeToString(hi)
+		fastXORBytes(tmp, inbyte)
+		fmt.Println()
+
+	}
 }
